@@ -1,0 +1,4 @@
+1. command->exp
+2. exp->exp "+" term | exp "-" term | term
+3. term->term "*" factor | factor
+4. factor->NUM | "(" exp ")"

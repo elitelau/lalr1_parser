@@ -1,0 +1,52 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+//
+//
+// This directory is a project which implements lalr(1) parser. 
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
+
+
+1. Introduce on file composition
+   ./*.cpp ./*.h       :    source code of lalr(1) parser
+   ./grammar.txt       :    the superset of tokens and grammar rules that 
+                            lalr(1) parser can recognize.
+   ./table.txt         :    the constructed ACTION table and GOTO table which 
+                            drive lalr(1) parser.
+
+   ./lalr1_parse       :    examples that demonstrate the use of lalr(1) parser 
+        |
+        |--test_lalr1_parse.cpp         :     API of lalr(1) parser
+        |--lr_parser                    :     the exectable of lalr(1) parser
+        |--examples                
+              |--caculator
+              |    |-- grammar.txt      :     grammar defintion
+              |    |-- *.c              :     source codes
+              |    |-- golden/run.log   :     traces on parser stack
+              |
+              |--insertion_sort    
+                   
+2. Instructions on how to use
+   step1:  build lalr(1) parser codes
+           $ cd .
+           $ make                       # generate a parser library libminus_parser.a 
+
+   step2:  build the executable of lalr(1) parser 
+           $ cd lalr1_parse/
+           $ make                       # generate the executable lr_parser
+
+   step3:  run example
+           $ export lr_debug_on_parse=true     # env var for monitor parser stack.
+           $ cd examples/calculator
+           $ # run.log traces parser stack on change.
+           $ ../../lr_parser grammar.txt a.c &> run.log
+
+ 
+   step4:  analyse lalr(1) parser how to parse
+           see run.log for printed parser stack traces.
+
+3. For problems, please contact with: eligere.lau@gmail.com
+   
+

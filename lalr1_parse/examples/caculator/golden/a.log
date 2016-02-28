@@ -1,0 +1,13 @@
+0  |INT |shift 3
+0 INT 3  |+ |reduce factor->NUM 
+0 factor 5  |+ |reduce term->factor 
+0 term 2  |+ |reduce exp->term 
+0 exp 1  |+ |shift 6
+0 exp 1 + 6  |INT |shift 3
+0 exp 1 + 6 INT 3  |+ |reduce factor->NUM 
+0 exp 1 + 6 factor 5  |+ |reduce term->factor 
+0 exp 1 + 6 term 10  |+ |reduce exp->exp + term 
+0 exp 1  |+ |shift 6
+0 exp 1 + 6  |$ |unkn action
+fatal error(line1): unexpected end of file
+parsing failed!!!

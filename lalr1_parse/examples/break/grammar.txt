@@ -1,0 +1,265 @@
+/******************************************************
+	Tokens:
+	ID = letter letter*
+	NUM = digit digit*
+	letter = a|..z|A|..|z
+	digit = 0|..|9
+	string = 
+	and = "&&"
+	or  = "||"
+	not = "!" 
+*******************************************************/
+
+/***********************************\
+ * grammar of MinusC
+ *
+ * "empty" represet for ¦Å
+\***********************************/
+
+1.	program->declaration_list
+	/**********************************************************
+	 void main(void)
+	 {
+	    //....	
+	 }	
+	**********************************************************/ 
+2.	declaration_list->declaration_list declaration | declaration
+3.	declaration->var_declaration ";" | fun_declaration
+
+4.	var_declaration->type_specifier declarator_list
+5.  declarator_list->declarator_list "," declarator | declarator
+6.	declarator->ID | ID "[" NUM "]"
+7.  variable->ID | ID "[" expression "]"
+    //! declarator are not totally identical with variable
+    /**********************************************************************
+     e.g
+     void main
+     {
+     		// when declare an arry, it must specify the constant number of array range
+     		int i, b, c[10]; 
+     		
+     		// when access an array content through index, it treated as a variable
+     		// we can access array content by a "variable" index
+     		for( i = 0; i < 10; ++i )
+     		   write(c[i]);
+     }
+    ***********************************************************************/
+    
+8.	type_specifier->"int" | "void" | "char" | "float"
+    /***********************************************************************
+     void func( void ) // "void" used only to specify the type of function or params
+     {
+        int i;
+        char ch;
+        float f;
+        
+        // ok, declare a series of continous vars after type sepecifier
+        int j, arr1[4], arr2[4], m; 
+     }
+    ************************************************************************/  
+9.	fun_declaration->type_specifier ID "(" params ")" function_body
+	  //!note: minusC is lack of prototypes
+	  /************************************************************************
+	   e.g
+	   // error, for prototypes are undefined in MinusC   
+	   void func( int, int );
+	   // ok!
+	   void func( int a, int b )
+	   {
+	     //...
+	     ....
+	   }
+	  ************************************************************************/
+10.	params->param_list | "void" | empty
+    //!note: empty is treated as "void"
+11.	param_list->param_list "," param | param
+12.	param->type_specifier ID | type_specifier ID "[" "]"
+
+13. function_body->"{" local_declarations statement_list "}"
+
+    // modified by liujian 2007.10.18
+    // original: compound_stmt->"{" statement_list "}" | statement_list
+14.	compound_stmt->"{" statement_list "}"
+    //!grammar 13 and grammar 14 will cause ambiguity when parser encounters symbol '{'
+    /*********************************************statement_list***************************************
+     e.g 
+     void func(void)
+     {  // (1)
+        // there is no declarations here
+     
+        // function_body->"{" local_declarations statement_list "}"
+        // local_declarations =>* ¦Å
+        // statement_list =>* statement
+        // statement =>* expression ";" 
+        // expression =>* factor
+        // factor =>* call
+        // call => write_fun
+        write("aha!");
+     }
+     // when parsing in the (1) line, encounter the curly bracket('{') symbol.
+     // thus, parser can either use grammar 12 or grammar 13 to deduce the next input token 
+    *************************************************************************************/
+15.	local_declarations->local_declarations var_declaration_seg | empty
+16. var_declaration_seg->var_declaration ";"
+17.	statement_list->statement_list statement | empty
+18.	statement->expression_stmt | selection_stmt | iteration_stmt | return_stmt 
+                  | jump_stmt | compound_stmt | label_stmt | sys_call_stmt
+    /************************************************************************
+     void func(void)
+     {} // statement_list is empty
+     
+     void func(void)
+     {
+        // a statement that do nothing with production 'expression_stmt->";"'
+        ;
+        
+        // a for_statement do nothing
+        for( i = 1; i < 8; ++i);
+     }
+     
+     int func(void)
+     {
+        int a, b;
+        a = b = 1;
+
+        // error, variables inside a function should be declared at the head of the function body 
+        if(1)
+        {
+           int c;
+           c = 1;
+        }  
+                
+        return nestedfunc(a, b);
+     }
+    *************************************************************************/
+19.	expression_stmt->expression ";"	 | ";"
+    // expression ";" do nothing
+20.	selection_stmt->"if" "(" expression ")" statement 
+                   |"if" "(" expression ")" statement "else" statement
+21.	iteration_stmt->for_stmt | while_stmt
+//22.	for_stmt->"for" "(" expression ";" expression ";" expression ")" statement
+22.	for_stmt->"for" "(" expression_stmt expression_stmt expression ")" statement |
+                  "for" "(" expression_stmt expression_stmt ")" statement 
+23.	while_stmt->"while" "(" expression ")" statement 
+24.	return_stmt->"return" ";" | "return" expression ";"
+25.	jump_stmt->"goto" ID ";" | "break" ";" | "continue" ";"
+26.	label_stmt->ID ":" statement
+27.	sys_call_stmt->write_fun | read_fun
+
+//! read, write these two functions are treated as system function, 
+//  which cannot be parsed as common function definitions.so we particularly define grammars for them.
+28.	write_fun->"write" "(" expression ")" ";" 
+             | "write" "(" STRING_LITERAL ")" ";" 
+             | "write" "(" CHAR ")" ";" 
+    //! note: here expression can be a variable, or a pointer of array, or a string
+29.	read_fun->"read" "(" variable ")" ";"
+		/************************************************************************************
+		 e.g 
+		 void func(void)
+		 {  // (1)
+		    // there is no declarations here
+		 
+		    // ok!  
+		    write("aha!");
+		 }
+		 // when parsing in the (1) line, encounter the curly bracket('{') symbol.
+		 // thus, parser can either use grammar 12 or grammar 13 to deduce the next input token 
+		*************************************************************************************/
+
+30.	expression->assign_expression | logic1_expression
+//30.	expression->variable "=" expression | logic1_expression  //!the first one is assignment expression
+31.	assign_expression->variable "=" expression | variable "=" CHAR | variable "=" STRING_LITERAL
+32.	logic1_expression->logic1_expression "||" logic2_expression | logic2_expression
+33.	logic2_expression-> logic2_expression "&&" arithmetic_expression | arithmetic_expression
+34.	arithmetic_expression->additive_expression relop additive_expression | additive_expression
+35.	relop-> "<=" | "<" | ">" | ">=" | "==" | "!="
+36.	additive_expression -> additive_expression addop term | term
+37.	addop-> "+" | "-"
+38.	term->term mulop logic3_expression | logic3_expression
+39.	mulop-> "*" | "/" | "%"
+40.	logic3_expression-> "!" logic3_expression | factor
+41.	factor->"(" expression ")" | variable | call | NUM
+//! note: precedence order -- "!"		>		"*"		>		"+"		>		"<=" 	>		"&&"		>		"||"		>		"=" 
+
+//41.	call->ID "(" args ")" | read_fun | write_fun
+42.	call->ID "(" args ")" 
+		/******************************************************************
+		 e.g 
+		 void main()
+		 {
+		    // args =>* expression, expression =>* factor
+		    // factor => call
+		    // ok! args can be a call returning a certain type of value
+		    myfunc( min(1,2) ); 
+		 } 
+		 ******************************************************************/
+
+42. args->arg_list|empty
+43.	arg_list->arg_list "," expression | expression
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+28.	expression->assign_exp | relation_exp | logic_exp | arithmetic_exp
+29.	arithmetic_exp->arithmetic_exp add_op multi_exp | multi_exp
+30.	multi_exp->multi_exp multi_op unary_exp
+31.	unary_exp->unary_op primary_exp
+32.	primary_exp->varibable | CONSTANT | call |"(" expression ")"
+33.	add_op->"+" | "-"
+34.	multi_op->"*" | "/" | "%"
+35.	unary_op->"-" | "!"
+//! precedence: "!" > "*" > "-"
+
+36.	logic_AND_exp->logic_AND_exp logic_OR_op logic_OR_exp | logic_OR_exp
+37. logic_OR_exp->logic_OR_exp logic_AND_op unary_exp | unary_exp
+*/             
+
+
+
+/* 
+14.	expression_stmt->expression `;` | `;`
+15.	expression->var `=` expression | logic1_expression
+
+14.	read_stmt->"read" "(" var `)` `;`
+15.	`write` `(` expression `)` `;`
+16.	`printf` `(` `"` STRING `"` `)` `;`
+
+19.	logic1_expression->logic1_expression `||` logic2_expression | logic2_expression
+20.	logic2_expression-> logic2_expression `&&` simple_expression | simple_expression
+19.	simple_expression->additive_expression relop additive_expression | additive_expression
+20.	relop-> `<=` | `<` | `>` | `>=` | `==` | `!=`
+21.	additive_expression -> additive_expression addop term | term
+22.	addop-> `+` | `-`
+23.	term->term mulop logic3_expression | logic3_expression
+24.	mulop-> `*` | `/` | `%`
+25.	logic3_expression-> `!` logic3_expression | factor
+26.	factor->`(` expression `)` | var | call | NUM
+27.	var->ID | ID `[` expression `]`
+28.	call->ID `(` args `)`
+29.	args->args_list | empty
+30.	args_list->args_list `,` expression | expression
+31.	sub_compoundstmt->ID `:` | call `;` | expression_stmt
+32.	if_stmt->`if` `(` expression `)` compound_stmt
+						| `if` `(` expression `)` compound_stmt `else` compound_stmt
+33.	while_stmt->`while` `(` expression `)` compound_stmt
+34.	for_stmt->`for` `(` var `=` expression `;` expression `;` var `=` expression `)` compound_stmt
+35.	goto_stmt->`goto` ID `;`
+36.	break_stmt->`break` `;`
+37.	continue_stmt->`continue` `;`
+38.	return_stmt->`return` `;` | `return` expression `;`
+*/
+

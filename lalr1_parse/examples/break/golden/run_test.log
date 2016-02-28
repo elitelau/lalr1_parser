@@ -1,0 +1,70 @@
+0  |void |shift 9
+0 void 9  |ID |reduce type_specifier->void 
+0 type_specifier 5  |ID |shift 12
+0 type_specifier 5 ID 12  |( |shift 16
+0 type_specifier 5 ID 12 ( 16  |) |reduce params->PSEUDO 
+0 type_specifier 5 ID 12 ( 16 params 19  |) |shift 27
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27  |{ |shift 31
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31  |int |reduce local_declarations->PSEUDO 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34  |int |shift 6
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 int 6  |ID |reduce type_specifier->int 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 type_specifier 38  |ID |shift 24
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 type_specifier 38 ID 24  |; |reduce declarator->ID 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 type_specifier 38 declarator 13  |; |reduce declarator_list->declarator 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 type_specifier 38 declarator_list 14  |; |reduce var_declaration->type_specifier declarator_list 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 var_declaration 39  |; |shift 80
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 var_declaration 39 ; 80  |while |reduce var_declaration_seg->var_declaration ; 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 var_declaration_seg 37  |while |reduce local_declarations->local_declarations var_declaration_seg 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34  |while |reduce statement_list->PSEUDO 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36  |while |shift 78
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78  |( |shift 115
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115  |INT |shift 49
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 INT 49  |) |reduce factor->NUM 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 factor 61  |) |reduce logic3_expression->factor 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 logic3_expression 77  |) |reduce term->logic3_expression 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 term 40  |) |reduce additive_expression->term 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 additive_expression 41  |) |reduce arithmetic_expression->additive_expression 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 arithmetic_expression 60  |) |reduce logic2_expression->arithmetic_expression 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 logic2_expression 59  |) |reduce logic1_expression->logic2_expression 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 logic1_expression 46  |) |reduce expression->logic1_expression 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138  |) |shift 148
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148  |{ |shift 44
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44  |if |reduce statement_list->PSEUDO 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99  |if |shift 65
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65  |( |shift 114
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114  |ID |shift 102
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 ID 102  |) |reduce variable->ID 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 variable 42  |) |reduce factor->variable 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 factor 61  |) |reduce logic3_expression->factor 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 logic3_expression 77  |) |reduce term->logic3_expression 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 term 40  |) |reduce additive_expression->term 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 additive_expression 41  |) |reduce arithmetic_expression->additive_expression 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 arithmetic_expression 60  |) |reduce logic2_expression->arithmetic_expression 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 logic2_expression 59  |) |reduce logic1_expression->logic2_expression 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 logic1_expression 46  |) |reduce expression->logic1_expression 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 expression 137  |) |shift 147
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 expression 137 ) 147  |continue |shift 57
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 expression 137 ) 147 continue 57  |; |shift 106
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 expression 137 ) 147 continue 57 ; 106  |break |reduce jump_stmt->continue ; 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 expression 137 ) 147 jump_stmt 69  |break |reduce statement->jump_stmt 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 if 65 ( 114 expression 137 ) 147 statement 156  |break |reduce selection_stmt->if ( expression ) statement 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 selection_stmt 72  |break |reduce statement->selection_stmt 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 statement 74  |break |reduce statement_list->statement_list statement 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99  |break |shift 56
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 break 56  |; |shift 105
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 break 56 ; 105  |} |reduce jump_stmt->break ; 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 jump_stmt 69  |} |reduce statement->jump_stmt 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 statement 74  |} |reduce statement_list->statement_list statement 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99  |} |shift 128
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 { 44 statement_list 99 } 128  |} |reduce compound_stmt->{ statement_list } 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 compound_stmt 66  |} |reduce statement->compound_stmt 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while 78 ( 115 expression 138 ) 148 statement 157  |} |reduce while_stmt->while ( expression ) statement 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 while_stmt 55  |} |reduce iteration_stmt->while_stmt 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 iteration_stmt 68  |} |reduce statement->iteration_stmt 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 statement 74  |} |reduce statement_list->statement_list statement 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36  |} |shift 53
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 { 31 local_declarations 34 statement_list 36 } 53  |$ |reduce function_body->{ local_declarations statement_list } 
+0 type_specifier 5 ID 12 ( 16 params 19 ) 27 function_body 30  |$ |reduce fun_declaration->type_specifier ID ( params ) function_body 
+0 fun_declaration 1  |$ |reduce declaration->fun_declaration 
+0 declaration 3  |$ |reduce declaration_list->declaration 
+parsing succeed!!!

@@ -1,0 +1,53 @@
+0  |INT |shift 3
+0 INT 3  |+ |reduce factor->NUM 
+0 factor 5  |+ |reduce term->factor 
+0 term 2  |+ |reduce exp->term 
+0 exp 1  |+ |shift 6
+0 exp 1 + 6  |INT |shift 3
+0 exp 1 + 6 INT 3  |* |reduce factor->NUM 
+0 exp 1 + 6 factor 5  |* |reduce term->factor 
+0 exp 1 + 6 term 10  |* |shift 8
+0 exp 1 + 6 term 10 * 8  |( |shift 4
+0 exp 1 + 6 term 10 * 8 ( 4  |INT |shift 3
+0 exp 1 + 6 term 10 * 8 ( 4 INT 3  |- |reduce factor->NUM 
+0 exp 1 + 6 term 10 * 8 ( 4 factor 5  |- |reduce term->factor 
+0 exp 1 + 6 term 10 * 8 ( 4 term 2  |- |reduce exp->term 
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9  |- |shift 7
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9 - 7  |INT |shift 3
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9 - 7 INT 3  |) |reduce factor->NUM 
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9 - 7 factor 5  |) |reduce term->factor 
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9 - 7 term 11  |) |reduce exp->exp - term 
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9  |) |shift 13
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9 ) 13  |* |reduce factor->( exp ) 
+0 exp 1 + 6 term 10 * 8 factor 12  |* |reduce term->term * factor 
+0 exp 1 + 6 term 10  |* |shift 8
+0 exp 1 + 6 term 10 * 8  |( |shift 4
+0 exp 1 + 6 term 10 * 8 ( 4  |INT |shift 3
+0 exp 1 + 6 term 10 * 8 ( 4 INT 3  |- |reduce factor->NUM 
+0 exp 1 + 6 term 10 * 8 ( 4 factor 5  |- |reduce term->factor 
+0 exp 1 + 6 term 10 * 8 ( 4 term 2  |- |reduce exp->term 
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9  |- |shift 7
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9 - 7  |INT |shift 3
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9 - 7 INT 3  |) |reduce factor->NUM 
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9 - 7 factor 5  |) |reduce term->factor 
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9 - 7 term 11  |) |reduce exp->exp - term 
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9  |) |shift 13
+0 exp 1 + 6 term 10 * 8 ( 4 exp 9 ) 13  |+ |reduce factor->( exp ) 
+0 exp 1 + 6 term 10 * 8 factor 12  |+ |reduce term->term * factor 
+0 exp 1 + 6 term 10  |+ |reduce exp->exp + term 
+0 exp 1  |+ |shift 6
+0 exp 1 + 6  |INT |shift 3
+0 exp 1 + 6 INT 3  |+ |reduce factor->NUM 
+0 exp 1 + 6 factor 5  |+ |reduce term->factor 
+0 exp 1 + 6 term 10  |+ |reduce exp->exp + term 
+0 exp 1  |+ |shift 6
+0 exp 1 + 6  |( |shift 4
+0 exp 1 + 6 ( 4  |INT |shift 3
+0 exp 1 + 6 ( 4 INT 3  |) |reduce factor->NUM 
+0 exp 1 + 6 ( 4 factor 5  |) |reduce term->factor 
+0 exp 1 + 6 ( 4 term 2  |) |reduce exp->term 
+0 exp 1 + 6 ( 4 exp 9  |) |shift 13
+0 exp 1 + 6 ( 4 exp 9 ) 13  |$ |reduce factor->( exp ) 
+0 exp 1 + 6 factor 5  |$ |reduce term->factor 
+0 exp 1 + 6 term 10  |$ |reduce exp->exp + term 
+parsing succeed!!!
